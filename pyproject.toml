@@ -1,0 +1,11 @@
+[project]
+name = "loan-approval-agent"
+version = "0.1.0"
+description = "A compliance-driven conversational AI agent for loan approval workflows."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "parlant>=3.0.2",
+    "parlant-client>=3.0.1",
+    "python-dotenv>=1.0.0",
+]
