@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Approval Agent</title>
+    <!-- Use Outfit font for a very modern, friendly tech vibe -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=5">
+</head>
+<body>
+    <!-- Ambient Aurora Background -->
+    <div class="aurora-bg">
+        <div class="aurora-blob aurora-1"></div>
+        <div class="aurora-blob aurora-2"></div>
+        <div class="aurora-blob aurora-3"></div>
+    </div>
+
+    <!-- App Layout Container -->
+    <div class="app-layout">
+        <!-- Sidebar for Chat History -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>Chats</h2>
+                <button id="close-sidebar-btn" class="icon-button mobile-only" title="Close Sidebar">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <button id="new-chat-sidebar-btn" class="sidebar-new-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                New Chat
+            </button>
+            <div id="session-list" class="session-list">
+                <!-- Session items will be dynamically injected here -->
+            </div>
+        </aside>
+
+        <!-- Main Chat Interface -->
+        <div class="chat-container">
+            <!-- Header -->
+            <header class="chat-header">
+                <div class="header-content">
+                    <div class="agent-info">
+                        <button id="menu-btn" class="icon-button" title="Menu">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                        </button>
+                        <div class="avatar-container">
+                            <img src="logo.png" alt="Logo" class="agent-avatar" id="header-avatar" onerror="this.style.display='none'">
+                            <div class="status-ring"></div>
+                        </div>
+                        <div class="agent-details">
+                            <h1 id="chat-title-header">Loan Approval Agent</h1>
+                            <span class="status-indicator" id="chat-status-header">
+                                AI Assistant
+                            </span>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button id="delete-current-chat-btn" class="icon-button delete-btn" title="Delete current chat">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
+                        <button id="new-chat-btn" class="icon-button" title="Start a new chat">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                <line x1="12" y1="9" x2="12" y2="15"></line>
+                                <line x1="9" y1="12" x2="15" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Chat Area -->
+            <main class="chat-box" id="chat-box">
+                <!-- Welcome Screen -->
+                <div id="welcome-screen" class="welcome-screen">
+                    <div class="welcome-icon">✨</div>
+                    <h2>Hi there!</h2>
+                    <p>I'm your intelligent Loan Assistant. Let's get you set up today.</p>
+                    
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" onclick="sendQuickAction('I want to get a loan.')">
+                            <span class="btn-icon">💸</span> Apply for a loan
+                        </button>
+                        <button class="quick-action-btn" onclick="sendQuickAction('What types of loans do you offer?')">
+                            <span class="btn-icon">📋</span> View loan types
+                        </button>
+                        <button class="quick-action-btn" onclick="sendQuickAction('What are the current interest rates?')">
+                            <span class="btn-icon">📈</span> Check rates
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Container -->
+                <div id="messages-container"></div>
+                
+                <!-- Typing Indicator -->
+                <div id="typing-indicator" class="message-row agent typing-row hidden">
+                    <div class="message-bubble typing-bubble">
+                        <div class="typing-dots">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Input Area -->
+            <footer class="chat-input-area">
+                <form id="chat-form">
+                    <div class="input-wrapper">
+                        <input type="text" id="message-input" placeholder="Message your agent..." autocomplete="off">
+                        <button type="submit" id="send-btn" class="send-button" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Marked for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js?v=8"></script>
+</body>
+</html>

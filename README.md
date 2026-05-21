@@ -45,9 +45,11 @@ Run the main application:
 uv run main.py
 ```
 
-This will start the server locally on port 8800 with the loan approval agent configured and ready to handle customer interactions.
+This will concurrently start:
+1. **The Custom Frontend** running locally on port 8000 (accessible at `http://localhost:8000`).
+2. **The Parlant Server** and its sandbox UI running locally on port 8800.
 
-![](chat-preview.png)
+You can interact with the agent using the custom premium chat interface at `http://localhost:8000`.
 
 ## Loan Approval Flow
 
